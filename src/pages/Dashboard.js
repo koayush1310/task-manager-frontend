@@ -21,12 +21,12 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/");
-    } else {
-      fetchTasks();
-    }
-  }, []);
+  if (!localStorage.getItem("token")) {
+    navigate("/login");
+  } else {
+    fetchTasks();
+  }
+}, [navigate]);
 
   // Add task
   const addTask = async () => {
