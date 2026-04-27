@@ -7,6 +7,8 @@ function Dashboard() {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("all");
+  const [message, setMessage] = useState("");
+  const [adding, setAdding] = useState(false);
 
   const navigate = useNavigate();
 
@@ -16,7 +18,7 @@ function Dashboard() {
       const res = await API.get("tasks/");
       setTasks(res.data);
     } catch {
-      alert("Error fetching tasks");
+      setMessage("Error fetching tasks");
     } finally {
       setLoading(false);
     }
@@ -35,11 +37,15 @@ function Dashboard() {
     if (!title.trim()) return;
 
     try {
+      setAdding(true);
       await API.post("tasks/", { title });
       setTitle("");
+      setMessage("Task added successfully");
       fetchTasks();
     } catch {
-      alert("Error adding task");
+      setMessage("Error adding task");
+    } finally {
+      setAdding(false);
     }
   };
 
@@ -47,9 +53,10 @@ function Dashboard() {
   const deleteTask = async (id) => {
     try {
       await API.delete(`tasks/${id}/`);
+      setMessage("Task deleted");
       fetchTasks();
     } catch {
-      alert("Error deleting task");
+      setMessage("Error deleting task");
     }
   };
 
@@ -60,9 +67,10 @@ function Dashboard() {
         ...task,
         completed: !task.completed,
       });
+      setMessage("Task updated");
       fetchTasks();
     } catch {
-      alert("Error updating task");
+      setMessage("Error updating task");
     }
   };
 
@@ -72,7 +80,7 @@ function Dashboard() {
     navigate("/login");
   };
 
-  // Filter tasks
+  // Filter logic
   const filteredTasks = tasks.filter((task) => {
     if (filter === "completed") return task.completed;
     if (filter === "pending") return !task.completed;
@@ -102,6 +110,11 @@ function Dashboard() {
           </button>
         </div>
 
+        {/* Message */}
+        {message && (
+          <p className="text-green-600 text-sm mb-3">{message}</p>
+        )}
+
         {/* Task Count */}
         <p className="text-sm text-gray-600 mb-4">
           {pendingCount} pending task{pendingCount !== 1 && "s"}
@@ -113,13 +126,22 @@ function Dashboard() {
             className="flex-1 p-2 border rounded"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") addTask();
+            }}
             placeholder="Enter task..."
           />
+
           <button
             onClick={addTask}
-            className="bg-green-500 text-white px-4 rounded hover:bg-green-600"
+            disabled={!title.trim() || adding}
+            className={`px-4 rounded text-white ${
+              title.trim()
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
           >
-            Add
+            {adding ? "Adding..." : "Add"}
           </button>
         </div>
 
@@ -144,7 +166,12 @@ function Dashboard() {
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
         ) : filteredTasks.length === 0 ? (
-          <p className="text-center text-gray-400">No tasks found 🚀</p>
+          <div className="text-center text-gray-400 mt-6">
+            <p className="text-lg">No tasks yet</p>
+            <p className="text-sm">
+              Start by adding your first task 🚀
+            </p>
+          </div>
         ) : (
           <ul className="space-y-3">
             {filteredTasks.map((task) => (
