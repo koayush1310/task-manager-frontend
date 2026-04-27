@@ -6,6 +6,8 @@ function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState("all");
+
   const navigate = useNavigate();
 
   // Fetch tasks
@@ -21,12 +23,12 @@ function Dashboard() {
   };
 
   useEffect(() => {
-  if (!localStorage.getItem("token")) {
-    navigate("/login");
-  } else {
-    fetchTasks();
-  }
-}, [navigate]);
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    } else {
+      fetchTasks();
+    }
+  }, [navigate]);
 
   // Add task
   const addTask = async () => {
@@ -70,20 +72,40 @@ function Dashboard() {
     navigate("/login");
   };
 
+  // Filter tasks
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === "completed") return task.completed;
+    if (filter === "pending") return !task.completed;
+    return true;
+  });
+
+  const pendingCount = tasks.filter((t) => !t.completed).length;
+
   return (
     <div className="min-h-screen bg-gray-100 p-6">
       <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow">
 
-        {/* Navbar */}
+        {/* Header */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Task Manager</h2>
+          <div>
+            <h2 className="text-3xl font-bold">Task Manager</h2>
+            <p className="text-gray-500 text-sm">
+              Stay organized and boost your productivity 🚀
+            </p>
+          </div>
+
           <button
             onClick={logout}
-            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
           >
             Logout
           </button>
         </div>
+
+        {/* Task Count */}
+        <p className="text-sm text-gray-600 mb-4">
+          {pendingCount} pending task{pendingCount !== 1 && "s"}
+        </p>
 
         {/* Add Task */}
         <div className="flex gap-2 mb-4">
@@ -91,7 +113,7 @@ function Dashboard() {
             className="flex-1 p-2 border rounded"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter task"
+            placeholder="Enter task..."
           />
           <button
             onClick={addTask}
@@ -101,30 +123,49 @@ function Dashboard() {
           </button>
         </div>
 
-        {/* Loading / Empty / List */}
+        {/* Filters */}
+        <div className="flex gap-2 mb-4">
+          {["all", "pending", "completed"].map((type) => (
+            <button
+              key={type}
+              onClick={() => setFilter(type)}
+              className={`px-3 py-1 rounded ${
+                filter === type
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-200"
+              }`}
+            >
+              {type.charAt(0).toUpperCase() + type.slice(1)}
+            </button>
+          ))}
+        </div>
+
+        {/* Content */}
         {loading ? (
           <p className="text-center text-gray-500">Loading...</p>
-        ) : tasks.length === 0 ? (
-          <p className="text-center text-gray-500">No tasks yet</p>
+        ) : filteredTasks.length === 0 ? (
+          <p className="text-center text-gray-400">No tasks found 🚀</p>
         ) : (
-          <ul>
-            {tasks.map((task) => (
+          <ul className="space-y-3">
+            {filteredTasks.map((task) => (
               <li
                 key={task.id}
-                className="flex justify-between items-center border-b py-2"
+                className="flex justify-between items-center bg-white p-3 rounded-lg shadow hover:shadow-md transition"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <input
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => toggleComplete(task)}
+                    className="w-4 h-4"
                   />
+
                   <span
-                    className={
+                    className={`text-sm ${
                       task.completed
                         ? "line-through text-gray-400"
-                        : ""
-                    }
+                        : "text-gray-800"
+                    }`}
                   >
                     {task.title}
                   </span>
@@ -132,7 +173,7 @@ function Dashboard() {
 
                 <button
                   onClick={() => deleteTask(task.id)}
-                  className="text-red-500 hover:text-red-700"
+                  className="text-red-500 hover:text-red-700 text-sm"
                 >
                   Delete
                 </button>
