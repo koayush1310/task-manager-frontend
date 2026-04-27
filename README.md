@@ -5,12 +5,12 @@ A full-stack Task Manager web application that allows users to manage their dail
 ---
 
 ## 🚀 Live Demo
-👉 https://your-vercel-link
+👉 https://task-manager-frontend-umber-iota.vercel.app/
 
 ---
 
 ## ⚙️ Backend API
-👉 https://your-railway-url
+👉 https://task-manager-backend-production-5224.up.railway.app/
 
 ---
 
@@ -48,18 +48,17 @@ A full-stack Task Manager web application that allows users to manage their dail
 ## 📂 Project Structure
 task-manager-frontend/
 ├── src/
-│ ├── pages/
-│ ├── services/
-│ ├── App.js
-│ └── index.js
-
+│   ├── pages/
+│   ├── services/
+│   ├── App.js
+│   └── index.js
 
 ---
 
 ## 🧪 How to Run Locally
 
 ### 1. Clone the repo
-git clone https://github.com/your-username/task-manager-frontend.git
+git clone https://github.com/koayush1310/task-manager-frontend/
 cd task-manager-frontend
 
 ### 2. Install dependencies
