@@ -62,16 +62,19 @@ npm start
 ## 📸 Screenshots
 
 ### 1. Home page
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/ef5784d1-778d-4ea7-be57-ed98fd8213c9" />
+![Home](./public/screenshots/home.png)
 
 ### 2. Signup Page
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/5914ce0b-af9d-416e-8d17-c4f8f0528c3d" />
+![Signup](./public/screenshots/signup.png)
 
 ### 3. Login Page
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/8ab2b4b0-c2ce-4c94-91ad-50e35491a5e4" />
+![Login](./public/screenshots/login.png)
 
-### 3. Task display page
-<img width="1920" height="1020" alt="image" src="https://github.com/user-attachments/assets/814d3e2c-d5cc-4a81-b3d7-d15265a67249" />
+### 3. Dashboard
+![Dashboard](./public/screenshots/dashboard.png)
+
+### 4. Dashboard (Dark theme)
+![DarkDashboard](./public/screenshots/dark%20dashboard.png)
 
 ---
 
