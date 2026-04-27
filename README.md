@@ -5,7 +5,7 @@ A full-stack Task Manager web application that allows users to manage their dail
 ---
 
 ## 🚀 Live Demo
-👉 https://task-manager-frontend-umber-iota.vercel.app/
+👉 https://ayush-task-manager-dashboard.vercel.app/
 
 ---
 
