@@ -45,19 +45,6 @@ A full-stack Task Manager web application that allows users to manage their dail
 
 ---
 
-## 📂 Project Structure
-task-manager-frontend/
-├── src/
-│   ├── pages/
-│   ├── services/
-│   ├── App.js
-│   └── index.js
-├── public/
-├── package.json
-└── README.md
-
----
-
 ## 🧪 How to Run Locally
 
 ### 1. Clone the repo
@@ -99,9 +86,3 @@ Ayush
 
 ## 📌 Note
 This project was built as part of a Full Stack Developer Internship assignment and demonstrates end-to-end development including authentication, API integration, and deployment.
-
-<<<<<<< HEAD
----
-=======
----
->>>>>>> b759054 (Updated README.md)
