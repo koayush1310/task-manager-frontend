@@ -52,6 +52,9 @@ task-manager-frontend/
 │   ├── services/
 │   ├── App.js
 │   └── index.js
+├── public/
+├── package.json
+└── README.md
 
 ---
 
