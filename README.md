@@ -100,4 +100,8 @@ Ayush
 ## 📌 Note
 This project was built as part of a Full Stack Developer Internship assignment and demonstrates end-to-end development including authentication, API integration, and deployment.
 
+<<<<<<< HEAD
 ---
+=======
+---
+>>>>>>> b759054 (Updated README.md)
